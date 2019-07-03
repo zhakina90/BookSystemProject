@@ -46,11 +46,14 @@ public class NoteJdbcTest {
 
         Note note2 = dao.getNote(note.getNote_id());
 
-        assertEquals (note, note2);
+        assertEquals (note2, note);
 
         dao.deleteNote(note.getNote_id());
 
+        note2 = dao.getNote(note.getNote_id());
+
         assertNull(note2);
+
     }
 
     @Test
