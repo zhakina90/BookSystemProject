@@ -14,10 +14,9 @@ import java.util.List;
 @Repository
 public class NoteServiceJdbcTemp implements NoteDao {
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    NoteDao dao;
 
     public static final String INSERT_NOTE_SQL =
             "insert into note (book_id, note) values (?,?)";
@@ -87,6 +86,8 @@ public class NoteServiceJdbcTemp implements NoteDao {
         jdbcTemplate.update(UPDATE_NOTE_SQL,
                 note.getBook_id(),
                 note.getNote());
+//                note.getNote_id());
+
     }
 
     @Override
