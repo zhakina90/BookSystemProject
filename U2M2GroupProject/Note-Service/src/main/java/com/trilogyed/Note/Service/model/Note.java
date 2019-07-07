@@ -8,6 +8,20 @@ public class Note {
     private int book_id;
     private String note;
 
+    public Note(int note_id, int book_id, String note) {
+        this.note_id = note_id;
+        this.book_id = book_id;
+        this.note = note;
+    }
+
+    public Note(int book_id, String note) {
+        this.book_id = book_id;
+        this.note = note;
+    }
+
+    public Note() {
+    }
+
     public int getNote_id() {
         return note_id;
     }
