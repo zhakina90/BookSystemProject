@@ -45,7 +45,7 @@ public class BookController {
         if(bookViewModel.getBookId() == 0)
             bookViewModel.setBookId(bookId);
         if(bookId != bookViewModel.getBookId()){
-            throw new IllegalArgumentException("Book ID: " + bookId + " must match the ID in the Book Object. ");
+            throw new IllegalArgumentException("Book ID: " + bookId + " must match the ID in the Book Object.");
         }
         return bookService.updateBook(bookViewModel);
     }
