@@ -2,6 +2,8 @@ package com.trilogyed.Note.Service.controller;
 
 import com.trilogyed.Note.Service.dao.NoteDao;
 import com.trilogyed.Note.Service.model.Note;
+import com.trilogyed.Note.Service.uitl.messages.NoteListEntry;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +16,36 @@ public class NoteController {
     @Autowired
     private NoteDao dao;
 
+    public static final String EXCHANGE = "note-exchange";
+    public static final String ROUTING_KEY = "note.notes.controller";
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    public NoteController(RabbitTemplate rabbitTemplate){
+        this.rabbitTemplate = rabbitTemplate;
+    }
+
+//    public NoteController (){};
+
+//    @RequestMapping(value = "/notes", method = RequestMethod.POST)
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Note addNoteToQueue(@RequestBody Note note) {
+//
+////        NoteListEntry msg = new NoteListEntry(note.getBookId(), note.getNote(), note.getNote_id());
+////        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, msg);
+//
+//        return note;
+//    }
+
+
+
+
+
     @RequestMapping(value = "/notes", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Note addNote(@RequestBody Note note) {
-//        Note note1 = dao.createNote(note);
-//        dao.createNote(note);
+
         return dao.createNote(note);
     }
 
@@ -33,14 +60,13 @@ public class NoteController {
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getNotesByBookID(@PathVariable int book_id) {
         List<Note> notes = dao.getNotesByBook(book_id);
-//        List<Note> noteList = new ArrayList<>();
-//        noteList.add(new Note(1, "testing"));
+
         return notes;
     }
 //     Is this needed? Endpoint the same as the one above?
     @RequestMapping(value = "/notes", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<Note> getNotesByBook() {
+    public List<Note> getAllNotes() {
         List<Note> notes = dao.getAllNotes();
         return notes;
     }

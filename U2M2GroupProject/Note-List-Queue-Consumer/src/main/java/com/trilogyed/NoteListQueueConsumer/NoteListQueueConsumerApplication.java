@@ -1,4 +1,4 @@
-package com.trilogyed.NoteQueueConsumer;
+package com.trilogyed.NoteListQueueConsumer;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -7,12 +7,13 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableFeignClients
-public class NoteQueueConsumerApplication {
+public class NoteListQueueConsumerApplication {
+
 	public static final String TOPIC_EXCHANGE_NAME = "note-exchange";
 	public static final String QUEUE_NAME = "note-queue";
 	public static final String ROUTING_KEY = "note.#";
@@ -37,9 +38,9 @@ public class NoteQueueConsumerApplication {
 		return new Jackson2JsonMessageConverter();
 	}
 
-	public static void main(String[] args) {
-		SpringApplication.run(NoteQueueConsumerApplication.class, args);
-	}
 
+	public static void main(String[] args) {
+		SpringApplication.run(NoteListQueueConsumerApplication.class, args);
+	}
 
 }

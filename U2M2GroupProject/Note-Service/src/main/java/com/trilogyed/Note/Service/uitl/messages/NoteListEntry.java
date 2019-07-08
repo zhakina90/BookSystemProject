@@ -1,4 +1,4 @@
-package com.trilogyed.bookservice.util.messages;
+package com.trilogyed.Note.Service.uitl.messages;
 
 public class NoteListEntry {
     private int bookId;
@@ -7,9 +7,8 @@ public class NoteListEntry {
     public NoteListEntry(){};
 
     public NoteListEntry( String note, int bookId) {
-
-        this.note = note;
         this.bookId = bookId;
+        this.note = note;
     }
 
     public int getBookId() {

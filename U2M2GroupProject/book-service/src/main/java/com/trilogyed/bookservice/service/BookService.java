@@ -39,6 +39,8 @@ private final NoteServiceClient client;
 
 
 
+
+
     private BookViewModel buildBookViewModel(Book book){
         BookViewModel bookViewModel = new BookViewModel();
         bookViewModel.setBookId(book.getBookId());

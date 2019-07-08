@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.trilogyed</groupId>
-	<artifactId>NoteQueueConsumer</artifactId>
+	<artifactId>Note-List-Queue-Consumer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>NoteQueueConsumer</name>
+	<name>Note-List-Queue-Consumer</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -29,6 +29,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
@@ -46,14 +47,15 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-feign</artifactId>
-			<version>1.4.7.RELEASE</version>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<version>2.0.0.RELEASE</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-hateoas</artifactId>
-			<version>2.1.4.RELEASE</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>5.1.8.RELEASE</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
