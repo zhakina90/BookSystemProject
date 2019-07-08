@@ -17,7 +17,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RefreshScope //Needed in this controller?
 public class BookController {
     @Autowired
     BookService bookService;
@@ -35,7 +34,7 @@ public class BookController {
 
     }
     public static final String EXCHANGE = "note-exchange";
-    public static final String ROUTING_KEY = "note.#";
+    public static final String ROUTING_KEY = "note.books.controller";
 
 
 //    @RequestMapping(value = "/note", method = RequestMethod.GET)
@@ -47,10 +46,15 @@ public class BookController {
     @RequestMapping(value = "/books", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public BookViewModel createBook(@RequestBody @Valid BookViewModel bookViewModel){
-        NoteListEntry msg = new NoteListEntry(bookViewModel.getTitle()  , bookViewModel.getAuthor(), bookViewModel.getNote());
+
+        bookService.addBook(bookViewModel);
+        NoteListEntry msg = new NoteListEntry();
+        msg.setBookId(bookViewModel.getBookId());
+        msg.setNote(bookViewModel.getNote());
         rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, msg);
 
-        return bookService.addBook(bookViewModel);
+        return bookViewModel;
+
     }
 
     @RequestMapping(value = "/books/{id}", method = RequestMethod.GET)

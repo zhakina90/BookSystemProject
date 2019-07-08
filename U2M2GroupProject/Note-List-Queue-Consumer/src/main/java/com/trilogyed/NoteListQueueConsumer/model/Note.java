@@ -1,6 +1,5 @@
-package com.trilogyed.NoteQueueConsumer.model;
+package com.trilogyed.NoteListQueueConsumer.model;
 
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class Note {
@@ -47,7 +46,6 @@ public class Note {
     }
 
     @Override
-    @NotNull
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
