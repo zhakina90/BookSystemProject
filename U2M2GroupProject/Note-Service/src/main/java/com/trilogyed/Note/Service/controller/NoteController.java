@@ -1,14 +1,11 @@
-package com.trilogyed.Note.Service.controler;
+package com.trilogyed.Note.Service.controller;
 
 import com.trilogyed.Note.Service.dao.NoteDao;
 import com.trilogyed.Note.Service.model.Note;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -40,7 +37,7 @@ public class NoteController {
 //        noteList.add(new Note(1, "testing"));
         return notes;
     }
-
+//     Is this needed? Endpoint the same as the one above?
     @RequestMapping(value = "/notes", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getNotesByBook() {
@@ -50,7 +47,7 @@ public class NoteController {
 
     @RequestMapping(value = "notes/{note_id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateBook(@PathVariable("note_id") int note_id, @RequestBody Note note) {
+    public void updateNote(@PathVariable("note_id") int note_id, @RequestBody Note note) {
         dao.updateNote(note);
     }
 
