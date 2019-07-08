@@ -1,4 +1,4 @@
-package com.trilogyed.Note.Service.controler;
+package com.trilogyed.Note.Service.controller;
 
 import com.trilogyed.Note.Service.exeption.NotFoundException;
 import org.springframework.dao.DataAccessException;
