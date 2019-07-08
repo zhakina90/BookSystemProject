@@ -5,7 +5,9 @@ import com.trilogyed.bookservice.exception.NotFoundException;
 import com.trilogyed.bookservice.model.Book;
 import com.trilogyed.bookservice.service.BookService;
 import com.trilogyed.bookservice.util.feign.NoteServiceClient;
+import com.trilogyed.bookservice.util.messages.NoteListEntry;
 import com.trilogyed.bookservice.viewModel.BookViewModel;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
@@ -23,9 +25,18 @@ public class BookController {
     @Autowired
     private final NoteServiceClient client;
 
-    BookController(NoteServiceClient client){
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
+
+    BookController(RabbitTemplate rabbitTemplate, NoteServiceClient client){
+        this.rabbitTemplate = rabbitTemplate;
         this.client = client;
+
     }
+    public static final String EXCHANGE = "note-exchange";
+    public static final String ROUTING_KEY = "note.#";
+
 
 //    @RequestMapping(value = "/note", method = RequestMethod.GET)
 //    public String note(){
@@ -36,6 +47,9 @@ public class BookController {
     @RequestMapping(value = "/books", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public BookViewModel createBook(@RequestBody @Valid BookViewModel bookViewModel){
+        NoteListEntry msg = new NoteListEntry(bookViewModel.getTitle()  , bookViewModel.getAuthor(), bookViewModel.getNote());
+        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, msg);
+
         return bookService.addBook(bookViewModel);
     }
 

@@ -1,8 +1,7 @@
-package com.trilogyed.NoteQueueConsumer.util.messages;
-
-import java.util.Objects;
+package com.trilogyed.bookservice.util.messages;
 
 public class NoteListEntry {
+
     private String title;
     private String author;
     private String note;

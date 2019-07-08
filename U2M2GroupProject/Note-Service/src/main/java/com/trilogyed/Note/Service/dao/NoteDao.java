@@ -12,7 +12,7 @@ public interface NoteDao {
 
     Note getNote(int id);
 
-   List<Note> getNotesByBook(int book_id);
+   List<Note> getNotesByBook(int bookId);
 
     List<Note> getAllNotes();
 
