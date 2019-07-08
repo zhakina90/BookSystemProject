@@ -46,7 +46,7 @@ public class NoteServiceJdbcTemp implements NoteDao {
     public Note createNote(Note note){
 
         jdbcTemplate.update(INSERT_NOTE_SQL,
-               note.getBook_id(),
+               note.getBookId(),
                 note.getNote());
 
         int id = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
@@ -68,9 +68,9 @@ public class NoteServiceJdbcTemp implements NoteDao {
     }
 
     @Override
-    public  List<Note> getNotesByBook(int book_id){
+    public  List<Note> getNotesByBook(int bookId){
 
-       return jdbcTemplate.query(GET_NOTES_BY_BOOK_SQL, this::mapRowToNote, book_id);
+       return jdbcTemplate.query(GET_NOTES_BY_BOOK_SQL, this::mapRowToNote, bookId);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class NoteServiceJdbcTemp implements NoteDao {
     public void updateNote(Note note){
 
         jdbcTemplate.update(UPDATE_NOTE_SQL,
-                note.getBook_id(),
+                note.getBookId(),
                 note.getNote());
 //                note.getNote_id());
 
@@ -98,7 +98,7 @@ public class NoteServiceJdbcTemp implements NoteDao {
     private Note mapRowToNote(ResultSet rs, int rowNum) throws SQLException {
         Note note = new Note();
         note.setNote_id(rs.getInt("note_id"));
-        note.setBook_id(rs.getInt("book_id"));
+        note.setBookId(rs.getInt("book_id"));
         note.setNote(rs.getString("note"));
 
         return note;

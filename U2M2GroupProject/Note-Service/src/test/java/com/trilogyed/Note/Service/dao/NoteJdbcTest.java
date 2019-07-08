@@ -39,7 +39,7 @@ public class NoteJdbcTest {
     public void addGetDeleteNote(){
         Note note = new Note();
         note.setNote_id(1);
-        note.setBook_id(22);
+        note.setBookId(22);
         note.setNote("This book is alright...could be better.");
 
         note = dao.createNote(note);
@@ -60,12 +60,12 @@ public class NoteJdbcTest {
     public void updateNote(){
         Note note = new Note();
         note.setNote_id(1);
-        note.setBook_id(22);
+        note.setBookId(22);
         note.setNote("This book is alright...could be better.");
 
         note = dao.createNote(note);
 
-        note.setBook_id(33);
+        note.setBookId(33);
         note.setNote("Ok, its actually kinda good");
 
         dao.updateNote(note);
@@ -77,25 +77,25 @@ public class NoteJdbcTest {
     public void getNoteByBook(){
         Note note = new Note();
         note.setNote_id(1);
-        note.setBook_id(22);
+        note.setBookId(22);
         note.setNote("This book is alright...could be better.");
 
         note = dao.createNote(note);
 
         Note note2 = new Note();
         note2.setNote_id(2);
-        note2.setBook_id(22);
+        note2.setBookId(22);
         note2.setNote("Awesome");
 
         Note note3 = new Note();
         note3.setNote_id(3);
-        note3.setBook_id(21);
+        note3.setBookId(21);
         note3.setNote("Coolbeans");
 
         note2= dao.createNote(note2);
         note3 = dao.createNote(note3);
 
-        List<Note> notes = dao.getNotesByBook(note.getBook_id());
+        List<Note> notes = dao.getNotesByBook(note.getBookId());
         assertEquals(2, notes.size());
     }
 }
