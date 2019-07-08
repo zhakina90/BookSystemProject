@@ -2,12 +2,9 @@ package com.trilogyed.Note.Service.controler;
 
 import com.trilogyed.Note.Service.dao.NoteDao;
 import com.trilogyed.Note.Service.model.Note;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
