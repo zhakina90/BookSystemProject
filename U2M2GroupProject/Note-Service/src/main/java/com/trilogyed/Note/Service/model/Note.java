@@ -5,17 +5,17 @@ import java.util.Objects;
 
 public class Note {
     private int note_id;
-    private int book_id;
+    private int bookId;
     private String note;
 
-    public Note(int note_id, int book_id, String note) {
+    public Note(int note_id, int bookId, String note) {
         this.note_id = note_id;
-        this.book_id = book_id;
+        this.bookId = bookId;
         this.note = note;
     }
 
-    public Note(int book_id, String note) {
-        this.book_id = book_id;
+    public Note(int bookId, String note) {
+        this.bookId = bookId;
         this.note = note;
     }
 
@@ -30,12 +30,12 @@ public class Note {
         this.note_id = note_id;
     }
 
-    public int getBook_id() {
-        return book_id;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setBook_id(int book_id) {
-        this.book_id = book_id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public String getNote() {
@@ -53,20 +53,20 @@ public class Note {
         if (o == null || getClass() != o.getClass()) return false;
         Note note1 = (Note) o;
         return note_id == note1.note_id &&
-                book_id == note1.book_id &&
+                bookId == note1.bookId &&
                 Objects.equals(note, note1.note);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(note_id, book_id, note);
+        return Objects.hash(note_id, bookId, note);
     }
 
     @Override
     public String toString() {
         return "Note{" +
                 "note_id=" + note_id +
-                ", book_id=" + book_id +
+                ", bookId=" + bookId +
                 ", note='" + note + '\'' +
                 '}';
     }
