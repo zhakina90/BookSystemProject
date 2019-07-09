@@ -1,6 +1,7 @@
 package com.trilogyed.bookservice.service;
 
 import com.trilogyed.bookservice.dao.BookDao;
+import com.trilogyed.bookservice.exception.NotFoundException;
 import com.trilogyed.bookservice.model.Book;
 import com.trilogyed.bookservice.model.Note;
 import com.trilogyed.bookservice.util.feign.NoteServiceClient;
@@ -56,7 +57,6 @@ private final NoteServiceClient client;
         Book book = new Book();
         book.setTitle(bookViewModel.getTitle());
         book.setAuthor(bookViewModel.getAuthor());
-       // bookViewModel.setNote(client.getNote(book.getBookId()));
         book = bookDao.createBook(book);
         bookViewModel.setBookId(book.getBookId());
         for(Note giveNote: bookViewModel.getNoteList()){
@@ -66,26 +66,20 @@ private final NoteServiceClient client;
             System.out.println("Message Sent");
         }
 
-//        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, bookViewModel.getNoteList());
-//            System.out.println("Message Sent");
-        //the information  that we added
         return bookViewModel;
     }
+    @Transactional
+    public BookViewModel updateBook(BookViewModel bookViewModel){
+        Book book = new Book();
+        book.setBookId(bookViewModel.getBookId());
+        book.setTitle(bookViewModel.getTitle());
+        book.setAuthor(bookViewModel.getAuthor());
+        bookViewModel.setNoteList(client.getAllNotes());
+        bookDao.updateBook(book);
+        //note
 
-
-//
-//    @Transactional
-//    public BookViewModel updateBook(BookViewModel bookViewModel){
-//        Book book = new Book();
-//        book.setBookId(bookViewModel.getBookId());
-//        book.setTitle(bookViewModel.getTitle());
-//        book.setAuthor(bookViewModel.getAuthor());
-//        bookViewModel.setNoteList(client.getAllNotes());
-//        bookDao.updateBook(book);
-//        //note
-//
-//        return bookViewModel;
-//    }
+        return bookViewModel;
+    }
 
     @Transactional
     public void removeBook(int id){
@@ -103,20 +97,17 @@ private final NoteServiceClient client;
 
     public BookViewModel findBookById(int id){
 
-        Book book = bookDao.getBookById(id);
         BookViewModel bookViewModel= new BookViewModel();
+        Book book = bookDao.getBookById(id);
+        if(book == null) {
+            throw new IllegalArgumentException("Book couldn't be fount for given Id " + id);
+        }else{
         bookViewModel.setBookId(book.getBookId());
         bookViewModel.setTitle(book.getTitle());
         bookViewModel.setAuthor(book.getAuthor());
-        bookViewModel.setNoteList(client.getAllNotes());
+        bookViewModel.setNoteList(client.getNotesByBookID(id));
+        }
         return bookViewModel;
-//        if(book == null){
-//            return null;
-//        }else{
-//            BookViewModel myBook = buildBookViewModel(book);
-//            myBook.setNote(client.getNote(id));
-//            return myBook;
-//        }
     }
 
 

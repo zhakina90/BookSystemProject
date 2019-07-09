@@ -28,7 +28,7 @@ public class NoteServiceJdbcTemp implements NoteDao {
             "select * from note";
 
     public static final String UPDATE_NOTE_SQL=
-            "update note set book_id = ?, note = ?";
+            "update note set book_id = ?, note = ? where note_id = ?";
 
     public static final String DELETE_NOTE=
             "delete from note where note_id =?";
@@ -36,7 +36,8 @@ public class NoteServiceJdbcTemp implements NoteDao {
     public static final String GET_NOTES_BY_BOOK_SQL =
             "select * from note where book_id =?";
 
-    public NoteServiceJdbcTemp (JdbcTemplate jdbcTemplate){
+    public NoteServiceJdbcTemp (JdbcTemplate jdbcTemplate)
+    {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -85,8 +86,8 @@ public class NoteServiceJdbcTemp implements NoteDao {
 
         jdbcTemplate.update(UPDATE_NOTE_SQL,
                 note.getBookId(),
-                note.getNote());
-//                note.getNote_id());
+                note.getNote(),
+                note.getNote_id());
 
     }
 
