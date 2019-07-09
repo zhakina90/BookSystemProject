@@ -1,4 +1,4 @@
-package com.trilogyed.Note.Service.model;
+package com.trilogyed.bookservice.model;
 
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
@@ -8,16 +8,6 @@ public class Note {
     private int bookId;
     private String note;
 
-<<<<<<< HEAD
-    public Note(int note_id, int book_id, String note) {
-        this.note_id = note_id;
-        this.book_id = book_id;
-        this.note = note;
-    }
-
-    public Note(int book_id, String note) {
-        this.book_id = book_id;
-=======
     public Note(int note_id, int bookId, String note) {
         this.note_id = note_id;
         this.bookId = bookId;
@@ -26,7 +16,6 @@ public class Note {
 
     public Note(int bookId, String note) {
         this.bookId = bookId;
->>>>>>> 5737fc2a0d093140ff28dd8fcabf6c3e03462a49
         this.note = note;
     }
 

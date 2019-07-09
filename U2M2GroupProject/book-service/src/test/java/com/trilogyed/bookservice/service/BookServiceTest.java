@@ -7,6 +7,7 @@ import com.trilogyed.bookservice.util.feign.NoteServiceClient;
 import com.trilogyed.bookservice.viewModel.BookViewModel;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,22 @@ public class BookServiceTest {
     BookDao bookDao;
     BookService bookService;
     NoteServiceClient client;
+<<<<<<< HEAD
+=======
+    RabbitTemplate rabbitTemplate;
+>>>>>>> 5737fc2a0d093140ff28dd8fcabf6c3e03462a49
 
     @Before
     public void setUp() throws Exception {
         setUpBookDaoMock();
+<<<<<<< HEAD
         bookService = new BookService(bookDao, client);
+=======
+        bookService = new BookService( bookDao, client);
+>>>>>>> 5737fc2a0d093140ff28dd8fcabf6c3e03462a49
     }
+
+
 
     public void setUpBookDaoMock(){
         bookDao = mock(BookDaoJdbcTemplateImpl.class);

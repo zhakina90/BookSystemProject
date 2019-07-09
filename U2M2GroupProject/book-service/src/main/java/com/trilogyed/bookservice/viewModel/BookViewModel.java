@@ -23,6 +23,7 @@ public class BookViewModel {
     public void setNote(String note) {
         this.note = note;
     }
+<<<<<<< HEAD
     //    private List<String> note;
 
 //    public List<String> getNote() {
@@ -32,6 +33,9 @@ public class BookViewModel {
 //    public void setNote(List<String> note) {
 //        this.note = note;
 //    }
+=======
+
+>>>>>>> 5737fc2a0d093140ff28dd8fcabf6c3e03462a49
 
     public int getBookId() {
         return bookId;
