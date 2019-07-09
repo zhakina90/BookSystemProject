@@ -2,6 +2,7 @@ package com.trilogyed.bookservice.service;
 
 import com.trilogyed.bookservice.dao.BookDao;
 import com.trilogyed.bookservice.model.Book;
+import com.trilogyed.bookservice.model.Note;
 import com.trilogyed.bookservice.util.feign.NoteServiceClient;
 import com.trilogyed.bookservice.util.messages.NoteListEntry;
 import com.trilogyed.bookservice.viewModel.BookViewModel;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Component
 @RefreshScope
 public class BookService {
@@ -21,24 +23,22 @@ public class BookService {
     @Autowired
     BookDao bookDao;
 
-//    @Autowired
-//    RabbitTemplate rabbitTemplate;
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
     @Autowired
 private final NoteServiceClient client;
 
     @Autowired
-    public BookService( BookDao bookDao, NoteServiceClient client){
+    public BookService( BookDao bookDao, NoteServiceClient client, RabbitTemplate rabbitTemplate){
 
         this.bookDao = bookDao;
         this.client = client;
+        this.rabbitTemplate= rabbitTemplate;
 
     }
-
-
-
-
-
+    public static final String EXCHANGE = "note-exchange";
+    public static final String ROUTING_KEY = "note.books.controller";
 
 
     private BookViewModel buildBookViewModel(Book book){
@@ -46,7 +46,7 @@ private final NoteServiceClient client;
         bookViewModel.setBookId(book.getBookId());
         bookViewModel.setTitle(book.getTitle());
         bookViewModel.setAuthor(book.getAuthor());
-        bookViewModel.setNote(client.getNote(book.getBookId()));
+       bookViewModel.setNoteList(client.getAllNotes());
 
         return bookViewModel;
     }
@@ -56,33 +56,36 @@ private final NoteServiceClient client;
         Book book = new Book();
         book.setTitle(bookViewModel.getTitle());
         book.setAuthor(bookViewModel.getAuthor());
+       // bookViewModel.setNote(client.getNote(book.getBookId()));
         book = bookDao.createBook(book);
         bookViewModel.setBookId(book.getBookId());
+        for(Note giveNote: bookViewModel.getNoteList()){
+            giveNote.setBookId(bookViewModel.getBookId());
+            System.out.println("Sending message...");
+            rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, giveNote);
+            System.out.println("Message Sent");
+        }
 
-//        NoteListEntry msg = new NoteListEntry(bookViewModel.getTitle()  , bookViewModel.getAuthor(), bookViewModel.getNote());
-//        System.out.println("Sending message...");
-//        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, msg);
-//        System.out.println("Message Sent");
-
+//        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, bookViewModel.getNoteList());
+//            System.out.println("Message Sent");
         //the information  that we added
-        bookViewModel.setNote(client.getNote(book.getBookId()));
         return bookViewModel;
     }
 
 
-
-    @Transactional
-    public BookViewModel updateBook(BookViewModel bookViewModel){
-        Book book = new Book();
-        book.setBookId(bookViewModel.getBookId());
-        book.setTitle(bookViewModel.getTitle());
-        book.setAuthor(bookViewModel.getAuthor());
-        bookViewModel.setNote(client.getNote(book.getBookId()));
-        bookDao.updateBook(book);
-        //note
-
-        return bookViewModel;
-    }
+//
+//    @Transactional
+//    public BookViewModel updateBook(BookViewModel bookViewModel){
+//        Book book = new Book();
+//        book.setBookId(bookViewModel.getBookId());
+//        book.setTitle(bookViewModel.getTitle());
+//        book.setAuthor(bookViewModel.getAuthor());
+//        bookViewModel.setNoteList(client.getAllNotes());
+//        bookDao.updateBook(book);
+//        //note
+//
+//        return bookViewModel;
+//    }
 
     @Transactional
     public void removeBook(int id){
@@ -105,7 +108,7 @@ private final NoteServiceClient client;
         bookViewModel.setBookId(book.getBookId());
         bookViewModel.setTitle(book.getTitle());
         bookViewModel.setAuthor(book.getAuthor());
-        bookViewModel.setNote(client.getNote(id));
+        bookViewModel.setNoteList(client.getAllNotes());
         return bookViewModel;
 //        if(book == null){
 //            return null;
