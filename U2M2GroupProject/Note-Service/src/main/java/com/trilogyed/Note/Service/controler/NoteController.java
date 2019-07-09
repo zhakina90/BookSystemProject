@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,8 @@ public class NoteController {
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getNotesByBookID(@PathVariable int book_id) {
         List<Note> notes = dao.getNotesByBook(book_id);
+//        List<Note> noteList = new ArrayList<>();
+//        noteList.add(new Note(1, "testing"));
         return notes;
     }
 

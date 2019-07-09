@@ -3,6 +3,7 @@ package com.trilogyed.bookservice.service;
 import com.trilogyed.bookservice.dao.BookDao;
 import com.trilogyed.bookservice.dao.BookDaoJdbcTemplateImpl;
 import com.trilogyed.bookservice.model.Book;
+import com.trilogyed.bookservice.util.feign.NoteServiceClient;
 import com.trilogyed.bookservice.viewModel.BookViewModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,11 +18,12 @@ import static org.mockito.Mockito.mock;
 public class BookServiceTest {
     BookDao bookDao;
     BookService bookService;
+    NoteServiceClient client;
 
     @Before
     public void setUp() throws Exception {
         setUpBookDaoMock();
-        bookService = new BookService(bookDao);
+        bookService = new BookService(bookDao, client);
     }
 
     public void setUpBookDaoMock(){
@@ -49,6 +51,7 @@ public class BookServiceTest {
         bookViewModel.setTitle("Anything");
         bookViewModel.setAuthor("Someone");
         bookViewModel.setBookId(1);
+        bookViewModel.setNote("This is our first note");
 
         bookViewModel = bookService.addBook(bookViewModel);
 
