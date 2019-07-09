@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.trilogyed.bookservice.service.BookService.EXCHANGE;
+import static com.trilogyed.bookservice.service.BookService.ROUTING_KEY;
+
 @RestController
 public class BookController {
     @Autowired
@@ -23,18 +26,16 @@ public class BookController {
 
     @Autowired
     private final NoteServiceClient client;
+//
+//    @Autowired
+//    RabbitTemplate rabbitTemplate;
 
-    @Autowired
-    RabbitTemplate rabbitTemplate;
 
+    BookController(NoteServiceClient client){
 
-    BookController(RabbitTemplate rabbitTemplate, NoteServiceClient client){
-        this.rabbitTemplate = rabbitTemplate;
         this.client = client;
 
     }
-    public static final String EXCHANGE = "note-exchange";
-    public static final String ROUTING_KEY = "note.books.controller";
 
 
 //    @RequestMapping(value = "/note", method = RequestMethod.GET)
@@ -48,10 +49,10 @@ public class BookController {
     public BookViewModel createBook(@RequestBody @Valid BookViewModel bookViewModel){
 
         bookService.addBook(bookViewModel);
-        NoteListEntry msg = new NoteListEntry();
-        msg.setBookId(bookViewModel.getBookId());
-        msg.setNote(bookViewModel.getNote());
-        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, msg);
+//        NoteListEntry msg = new NoteListEntry();
+//        msg.setBookId(bookViewModel.getBookId());
+//        msg.setNote(bookViewModel.getNote());
+//        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, msg);
 
         return bookViewModel;
 
@@ -73,16 +74,16 @@ public class BookController {
         return bookService.findAllBooks();
     }
 
-    @RequestMapping(value = "/books/{id}", method = RequestMethod.PUT)
-    @ResponseStatus(value = HttpStatus.OK)
-    public BookViewModel updateBook(@PathVariable("id") int bookId, @RequestBody BookViewModel bookViewModel){
-        if(bookViewModel.getBookId() == 0)
-            bookViewModel.setBookId(bookId);
-        if(bookId != bookViewModel.getBookId()){
-            throw new IllegalArgumentException("Book ID: " + bookId + " must match the ID in the Book Object.");
-        }
-        return bookService.updateBook(bookViewModel);
-    }
+//    @RequestMapping(value = "/books/{id}", method = RequestMethod.PUT)
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public BookViewModel updateBook(@PathVariable("id") int bookId, @RequestBody BookViewModel bookViewModel){
+//        if(bookViewModel.getBookId() == 0)
+//            bookViewModel.setBookId(bookId);
+//        if(bookId != bookViewModel.getBookId()){
+//            throw new IllegalArgumentException("Book ID: " + bookId + " must match the ID in the Book Object.");
+//        }
+//        return bookService.updateBook(bookViewModel);
+//    }
 
     @RequestMapping(value = "/books/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)

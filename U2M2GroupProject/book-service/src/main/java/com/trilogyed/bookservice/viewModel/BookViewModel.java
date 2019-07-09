@@ -1,5 +1,7 @@
 package com.trilogyed.bookservice.viewModel;
 
+import com.trilogyed.bookservice.model.Note;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -14,16 +16,15 @@ public class BookViewModel {
     @NotNull
     @Size(max = 50)
     private String author;
-    private String note;
+    private List<Note> noteList;
 
-    public String getNote() {
-        return note;
+    public List<Note> getNoteList() {
+        return noteList;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setNoteList(List<Note> noteList) {
+        this.noteList = noteList;
     }
-
 
     public int getBookId() {
         return bookId;
@@ -56,11 +57,12 @@ public class BookViewModel {
         BookViewModel that = (BookViewModel) o;
         return bookId == that.bookId &&
                 title.equals(that.title) &&
-                author.equals(that.author);
+                author.equals(that.author) &&
+                noteList.equals(that.noteList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bookId, title, author);
+        return Objects.hash(bookId, title, author, noteList);
     }
 }
