@@ -82,6 +82,7 @@ public class NoteServiceJdbcTemp implements NoteDao {
     }
 
     @Override
+    @Transactional
     public void updateNote(Note note){
 
         jdbcTemplate.update(UPDATE_NOTE_SQL,

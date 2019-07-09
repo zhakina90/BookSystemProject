@@ -77,8 +77,8 @@ public class BookController {
     @RequestMapping(value = "/books/{id}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.OK)
     public BookViewModel updateBook(@PathVariable("id") int bookId, @RequestBody BookViewModel bookViewModel){
-        if(bookViewModel.getBookId() == 0)
-            bookViewModel.setBookId(bookId);
+//        if(bookViewModel.getBookId() == 0)
+//            bookViewModel.setBookId(bookId);
         if(bookId != bookViewModel.getBookId()){
             throw new IllegalArgumentException("Book ID: " + bookId + " must match the ID in the Book Object.");
         }
