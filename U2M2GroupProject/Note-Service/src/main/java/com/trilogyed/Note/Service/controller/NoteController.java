@@ -38,10 +38,6 @@ public class NoteController {
 //        return note;
 //    }
 
-
-
-
-
     @RequestMapping(value = "/notes", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Note addNote(@RequestBody Note note) {
@@ -63,7 +59,7 @@ public class NoteController {
 
         return notes;
     }
-//     Is this needed? Endpoint the same as the one above?
+
     @RequestMapping(value = "/notes", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getAllNotes() {
@@ -74,6 +70,7 @@ public class NoteController {
     @RequestMapping(value = "notes/{note_id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateNote(@PathVariable("note_id") int note_id, @RequestBody Note note) {
+        note.setNote_id(note_id);
         dao.updateNote(note);
     }
 
