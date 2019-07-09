@@ -74,7 +74,14 @@ private final NoteServiceClient client;
         book.setBookId(bookViewModel.getBookId());
         book.setTitle(bookViewModel.getTitle());
         book.setAuthor(bookViewModel.getAuthor());
+        for(Note giveNote: bookViewModel.getNoteList()){
+            giveNote.setBookId(bookViewModel.getBookId());
+            System.out.println("Sending message...");
+            rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, giveNote);
+            System.out.println("Message Sent");
+        }
         bookViewModel.setNoteList(client.getAllNotes());
+
         bookDao.updateBook(book);
         //note
 
