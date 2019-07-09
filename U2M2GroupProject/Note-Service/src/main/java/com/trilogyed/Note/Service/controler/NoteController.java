@@ -5,6 +5,9 @@ import com.trilogyed.Note.Service.model.Note;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,8 +19,9 @@ public class NoteController {
     @RequestMapping(value = "/notes", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Note addNote(@RequestBody Note note) {
-        Note note1 = dao.createNote(note);
-        return note1;
+//        Note note1 = dao.createNote(note);
+//        dao.createNote(note);
+        return dao.createNote(note);
     }
 
     @RequestMapping(value = "/notes/{id}", method = RequestMethod.GET)
@@ -27,10 +31,12 @@ public class NoteController {
         return note1;
     }
 
-    @RequestMapping(value = "/notes/getbooksbyid/{book_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/notes/book/{book_id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getNotesByBookID(@PathVariable int book_id) {
         List<Note> notes = dao.getNotesByBook(book_id);
+//        List<Note> noteList = new ArrayList<>();
+//        noteList.add(new Note(1, "testing"));
         return notes;
     }
 

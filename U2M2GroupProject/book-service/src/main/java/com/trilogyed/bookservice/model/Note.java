@@ -1,4 +1,4 @@
-package com.trilogyed.Note.Service.model;
+package com.trilogyed.bookservice.model;
 
 import javax.validation.constraints.NotNull;
 import java.util.Objects;

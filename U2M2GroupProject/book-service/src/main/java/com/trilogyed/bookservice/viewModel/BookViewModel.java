@@ -2,6 +2,7 @@ package com.trilogyed.bookservice.viewModel;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Objects;
 
 public class BookViewModel {
@@ -13,6 +14,16 @@ public class BookViewModel {
     @NotNull
     @Size(max = 50)
     private String author;
+    private String note;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
 
     public int getBookId() {
         return bookId;
