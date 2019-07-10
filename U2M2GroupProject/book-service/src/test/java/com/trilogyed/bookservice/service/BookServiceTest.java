@@ -18,6 +18,7 @@ import static org.mockito.Mockito.mock;
 
 public class BookServiceTest {
     BookDao bookDao;
+
     BookService bookService;
     NoteServiceClient client;
     RabbitTemplate rabbitTemplate;
