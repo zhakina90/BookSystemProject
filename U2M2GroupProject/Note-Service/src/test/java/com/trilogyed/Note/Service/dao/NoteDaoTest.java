@@ -16,7 +16,7 @@ import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class NoteJdbcTest {
+public class NoteDaoTest {
 
     @Autowired
     protected NoteDao dao;

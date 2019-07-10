@@ -1,11 +1,15 @@
 package com.trilogyed.Note.Service.model;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class Note {
+    @NotNull
     private int note_id;
+    @NotNull
     private int bookId;
+    @Size(max = 255)
     private String note;
 
     public Note(int note_id, int bookId, String note) {
