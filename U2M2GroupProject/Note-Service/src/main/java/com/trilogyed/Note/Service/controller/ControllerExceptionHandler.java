@@ -24,12 +24,9 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity<VndErrors> validationError(MethodArgumentNotValidException e, WebRequest request) {
-        // BindingResult holds the validation errors
         BindingResult result = e.getBindingResult();
-        // Validation errors are stored in FieldError objects
         List<FieldError> fieldErrors = result.getFieldErrors();
 
-        // Translate the FieldErrors to VndErrors
         List<VndErrors.VndError> vndErrorList = new ArrayList<>();
 
         for (FieldError fieldError : fieldErrors) {
@@ -37,10 +34,8 @@ public class ControllerExceptionHandler {
             vndErrorList.add(vndError);
         }
 
-        // Wrap all of the VndError objects in a VndErrors object
         VndErrors vndErrors = new VndErrors(vndErrorList);
 
-        // Create and return the ResponseEntity
         ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(vndErrors, HttpStatus.UNPROCESSABLE_ENTITY);
         return responseEntity;
     }
@@ -64,7 +59,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(value = {DataAccessException.class})
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity<VndErrors> dataAccessException(DataAccessException e, WebRequest request) {
-        VndErrors error = new VndErrors(request.toString(), "An internal error occured" + e.getMessage());
+        VndErrors error = new VndErrors(request.toString(), "An internal error occurred" + e.getMessage());
         ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
         return responseEntity;
     }

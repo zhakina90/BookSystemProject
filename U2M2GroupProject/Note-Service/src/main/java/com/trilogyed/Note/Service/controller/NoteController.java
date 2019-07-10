@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,21 +27,9 @@ public class NoteController {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-//    public NoteController (){};
-
-//    @RequestMapping(value = "/notes", method = RequestMethod.POST)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public Note addNoteToQueue(@RequestBody Note note) {
-//
-////        NoteListEntry msg = new NoteListEntry(note.getBookId(), note.getNote(), note.getNote_id());
-////        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, msg);
-//
-//        return note;
-//    }
-
     @RequestMapping(value = "/notes", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Note addNote(@RequestBody Note note) {
+    public Note addNote(@Valid @RequestBody Note note) {
 
         return dao.createNote(note);
     }
@@ -69,7 +58,7 @@ public class NoteController {
 
     @RequestMapping(value = "notes/{note_id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateNote(@PathVariable("note_id") int note_id, @RequestBody Note note) {
+    public void updateNote(@PathVariable("note_id") int note_id, @Valid @RequestBody Note note) {
         note.setNote_id(note_id);
         dao.updateNote(note);
     }
