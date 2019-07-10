@@ -11,21 +11,23 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.List;
 
 import static org.junit.Assert.*;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class BookDaoTest {
-@Autowired
-BookDao bookDao;
+    @Autowired
+    BookDao bookDao;
+
     @Before
     public void setUp() throws Exception {
         List<Book> bookList = bookDao.getAllBooks();
         bookList.stream()
-                .forEach(book ->bookDao.deleteBook(book.getBookId()));
+                .forEach(book -> bookDao.deleteBook(book.getBookId()));
     }
 
     @Test
     public void createGetDeleteBook() {
-        Book book = new Book("Hello","Mr.Hello");
+        Book book = new Book("Hello", "Mr.Hello");
         bookDao.createBook(book);
         Book book1 = bookDao.getBookById(book.getBookId());
         assertEquals(book1, book);
@@ -38,8 +40,8 @@ BookDao bookDao;
 
     @Test
     public void getAllBooks() {
-        Book book = new Book("Hello","Mr.Hello");
-        Book book2 = new Book("Bye","Mrs.Bye");
+        Book book = new Book("Hello", "Mr.Hello");
+        Book book2 = new Book("Bye", "Mrs.Bye");
         bookDao.createBook(book);
         bookDao.createBook(book2);
         List<Book> bookList = bookDao.getAllBooks();
@@ -50,7 +52,7 @@ BookDao bookDao;
 
     @Test
     public void updateBook() {
-        Book book1 = new Book("Bye","Mrs.Bye");
+        Book book1 = new Book("Bye", "Mrs.Bye");
         bookDao.createBook(book1);
         book1.setTitle("Random Book");
         book1.setAuthor("Mystery");

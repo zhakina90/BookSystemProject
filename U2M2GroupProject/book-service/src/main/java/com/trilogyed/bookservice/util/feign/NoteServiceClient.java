@@ -12,8 +12,6 @@ import java.util.List;
 
 @FeignClient(name = "note-service")
 public interface NoteServiceClient {
-//    @RequestMapping(value = "/notes/book/{book_id}", method = RequestMethod.GET)
-//    String getNote(@PathVariable("book_id") int id);
 
     @RequestMapping(value = "/notes", method = RequestMethod.GET)
      List<Note> getAllNotes();

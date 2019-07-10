@@ -24,30 +24,29 @@ public class NoteServiceJdbcTemp implements NoteDao {
     public static final String GET_NOTE_SQL =
             "select * from note where note_id=?";
 
-    public static final String GET_ALL_NOTES_SQL=
+    public static final String GET_ALL_NOTES_SQL =
             "select * from note";
 
-    public static final String UPDATE_NOTE_SQL=
+    public static final String UPDATE_NOTE_SQL =
             "update note set book_id = ?, note = ? where note_id = ?";
 
-    public static final String DELETE_NOTE=
+    public static final String DELETE_NOTE =
             "delete from note where note_id =?";
 
     public static final String GET_NOTES_BY_BOOK_SQL =
             "select * from note where book_id =?";
 
-    public NoteServiceJdbcTemp (JdbcTemplate jdbcTemplate)
-    {
+    public NoteServiceJdbcTemp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
 
     @Override
     @Transactional
-    public Note createNote(Note note){
+    public Note createNote(Note note) {
 
         jdbcTemplate.update(INSERT_NOTE_SQL,
-               note.getBookId(),
+                note.getBookId(),
                 note.getNote());
 
         int id = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
@@ -57,33 +56,32 @@ public class NoteServiceJdbcTemp implements NoteDao {
     }
 
     @Override
-    public  Note getNote(int id){
+    public Note getNote(int id) {
 
         try {
             return jdbcTemplate.queryForObject(GET_NOTE_SQL, this::mapRowToNote, id);
-        }
-       catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             return null;
-       }
+        }
 
     }
 
     @Override
-    public  List<Note> getNotesByBook(int bookId){
+    public List<Note> getNotesByBook(int bookId) {
 
-       return jdbcTemplate.query(GET_NOTES_BY_BOOK_SQL, this::mapRowToNote, bookId);
+        return jdbcTemplate.query(GET_NOTES_BY_BOOK_SQL, this::mapRowToNote, bookId);
     }
 
     @Override
-    public List<Note> getAllNotes(){
+    public List<Note> getAllNotes() {
 
-            return jdbcTemplate.query(GET_ALL_NOTES_SQL, this::mapRowToNote);
+        return jdbcTemplate.query(GET_ALL_NOTES_SQL, this::mapRowToNote);
 
     }
 
     @Override
     @Transactional
-    public void updateNote(Note note){
+    public void updateNote(Note note) {
 
         jdbcTemplate.update(UPDATE_NOTE_SQL,
                 note.getBookId(),
@@ -93,8 +91,8 @@ public class NoteServiceJdbcTemp implements NoteDao {
     }
 
     @Override
-    public void deleteNote(int note_id){
-         jdbcTemplate.update(DELETE_NOTE, note_id);
+    public void deleteNote(int note_id) {
+        jdbcTemplate.update(DELETE_NOTE, note_id);
     }
 
     private Note mapRowToNote(ResultSet rs, int rowNum) throws SQLException {

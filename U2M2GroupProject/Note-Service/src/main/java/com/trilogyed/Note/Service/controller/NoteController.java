@@ -2,7 +2,6 @@ package com.trilogyed.Note.Service.controller;
 
 import com.trilogyed.Note.Service.dao.NoteDao;
 import com.trilogyed.Note.Service.model.Note;
-import com.trilogyed.Note.Service.uitl.messages.NoteListEntry;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

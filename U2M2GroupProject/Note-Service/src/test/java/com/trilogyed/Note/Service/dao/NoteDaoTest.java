@@ -36,7 +36,7 @@ public class NoteDaoTest {
     }
 
     @Test
-    public void addGetDeleteNote(){
+    public void addGetDeleteNote() {
         Note note = new Note();
         note.setNote_id(1);
         note.setBookId(22);
@@ -46,7 +46,7 @@ public class NoteDaoTest {
 
         Note note2 = dao.getNote(note.getNote_id());
 
-        assertEquals (note2, note);
+        assertEquals(note2, note);
 
         dao.deleteNote(note.getNote_id());
 
@@ -57,7 +57,7 @@ public class NoteDaoTest {
     }
 
     @Test
-    public void updateNote(){
+    public void updateNote() {
         Note note = new Note();
         note.setNote_id(1);
         note.setBookId(22);
@@ -74,7 +74,7 @@ public class NoteDaoTest {
     }
 
     @Test
-    public void getNoteByBook(){
+    public void getNoteByBook() {
         Note note = new Note();
         note.setNote_id(1);
         note.setBookId(22);
@@ -92,7 +92,7 @@ public class NoteDaoTest {
         note3.setBookId(21);
         note3.setNote("Coolbeans");
 
-        note2= dao.createNote(note2);
+        note2 = dao.createNote(note2);
         note3 = dao.createNote(note3);
 
         List<Note> notes = dao.getNotesByBook(note.getBookId());
